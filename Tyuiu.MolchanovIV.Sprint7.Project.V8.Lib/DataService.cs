@@ -2,137 +2,158 @@
 {
     public class DataService
     {
-        public static string[,] getInputCarInto(string path)
+        public string[,] getInputCarInto(string path)
         {
-            // Кол-во строк в блоке автомобилей
-            int count = 0;
-            string[,] output = new string[count, 7];
+            bool isThisLine = true;
+
+            var rows = new List<string[]>();
 
             using (StreamReader reader = new StreamReader(path))
             {
-                string line, curFeature = "", curLine = "";
-                int curColumn = 0;
-
-                while(((line = reader.ReadLine()) != null) && ((line = reader.ReadLine()) != "Водители:"))
-                {
-                    curLine = line;
-                    for (int i = 0; i < curLine.Length; i++)
-                    {
-                        if (curLine[i] == ':')
-                        {
-                            i++;
-                            curFeature += curLine[i];
-                        }
-                        if (curLine[i] == ',')
-                        {
-                            output[count, curColumn] = curFeature;
-                            curColumn++;
-                            curFeature = "";
-                        }
-                    }
-                    count++;
-                }
-            }
-
-            return output;
-        }
-
-        public static string[,] getInputDriverInto(string path)
-        {
-            // Кол-во строк в блоке водителей
-            int count = 0;
-            string[,] output = new string[count, 7];
-
-            using (StreamReader reader = new StreamReader(path))
-            {
-                string line, curLine = "", curFeature = "";
-                bool isThisLine = false;
-                int curColumn = 0;
-
-                while (((line = reader.ReadLine()) != null) && ((line = reader.ReadLine()) != "Транспортная карта:"))
-                {
-                    curLine = line;
-
-                    if(isThisLine)
-                    {
-                        for (int i = 0; i < curLine.Length; i++)
-                        {
-                            if (curLine[i] == ':')
-                            {
-                                i++;
-                                curFeature += curLine[i];
-                            }
-                            if (curLine[i] == ',')
-                            {
-                                output[count, curColumn] = curFeature;
-                                curColumn++;
-                                curFeature = "";
-                            }
-                        }
-                    }
-
-                    if (line == "Водители:")
-                    {
-                        count = 0;
-                        isThisLine = true;
-                    }
-                    count++;
-                }
-            }
-
-            
-
-            //
-
-            return output;
-        }
-
-        public static string[,] getInputPointInto(string path)
-        {
-            // Кол-во строк в блоке транспортная карта
-            int count = 0;
-            string[,] output = new string[count, 7];
-
-            using (StreamReader reader = new StreamReader(path))
-            {
-                string line, curLine = "", curFeature = "";
-                bool isThisLine = false;
-                int curColumn = 0;
+                string line;
 
                 while ((line = reader.ReadLine()) != null)
                 {
-                    curLine = line;
+                    if (!isThisLine)
+                        continue;
 
-                    if (isThisLine)
+                    if (line == "Водители:")
                     {
-                        for (int i = 0; i < curLine.Length; i++)
-                        {
-                            if (curLine[i] == ':')
-                            {
-                                i++;
-                                curFeature += curLine[i];
-                            }
-                            if (curLine[i] == ',')
-                            {
-                                output[count, curColumn] = curFeature;
-                                curColumn++;
-                                curFeature = "";
-                            }
-                        }
+                        isThisLine = false;
+
+                        continue;
+                    }
+
+                    if (line.EndsWith(":"))
+                        continue;
+
+                    string[] parts = line.Split(',', StringSplitOptions.RemoveEmptyEntries);
+
+                    for (int i = 0; i < parts.Length; i++)
+                    {
+                        int idx = parts[i].IndexOf(':');
+                        if (idx == -1)
+                            continue;
+
+                        parts[i] = parts[i].Substring(idx + 1).Trim();
+                    }
+
+                    rows.Add(parts);
+
+                }
+            }
+
+            string[,] output = new string[rows.Count, rows[0].Length];
+            for (int i = 0; i < rows.Count; i++)
+                for (int j = 0; j < rows[i].Length; j++)
+                    output[i, j] = rows[i][j];
+
+            return output;
+        }
+
+
+        public string[,] getInputDriverInto(string path)
+        {
+            bool isThisLine = false;
+
+            var rows = new List<string[]>();
+
+            using (StreamReader reader = new StreamReader(path))
+            {
+                string line;
+
+                while ((line = reader.ReadLine()) != null)
+                {
+                    if (line == "Водители:")
+                    {
+                        isThisLine = true;
+
+                        continue;
                     }
 
                     if (line == "Транспортная карта:")
                     {
-                        isThisLine = true;
-                        count = 0;
+                        isThisLine = false;
+
+                        continue;
                     }
-                    count++;
+
+                    if (!isThisLine)
+                        continue;
+
+                    if (line.EndsWith(":"))
+                        continue;
+
+                    string[] parts = line.Split(',', StringSplitOptions.RemoveEmptyEntries);
+
+                    for (int i = 0; i < parts.Length; i++)
+                    {
+                        int idx = parts[i].IndexOf(':');
+                        if (idx == -1)
+                            continue;
+
+                        parts[i] = parts[i].Substring(idx + 1).Trim();
+                    }
+
+                    rows.Add(parts);
+
                 }
             }
 
-            
+            string[,] output = new string[rows.Count, rows[0].Length];
+            for (int i = 0; i < rows.Count; i++)
+                for (int j = 0; j < rows[i].Length; j++)
+                    output[i, j] = rows[i][j];
 
-            //
+            return output;
+        }
+
+        public string[,] getInputPointInto(string path)
+        {
+            bool isThisLine = false;
+
+            var rows = new List<string[]>();
+
+            using (StreamReader reader = new StreamReader(path))
+            {
+                string line;
+
+                while ((line = reader.ReadLine()) != null)
+                {
+
+                    if (line == "Транспортная карта:")
+                    {
+                        isThisLine = true;
+
+                        continue;
+                    }
+
+                    if (!isThisLine)
+                        continue;
+
+                    if (line.EndsWith(":"))
+                        continue;
+
+                    string[] parts = line.Split(',', StringSplitOptions.RemoveEmptyEntries);
+
+                    for (int i = 0; i < parts.Length; i++)
+                    {
+                        int idx = parts[i].IndexOf(':');
+                        if (idx == -1)
+                            continue;
+
+                        parts[i] = parts[i].Substring(idx + 1).Trim();
+                    }
+
+                    rows.Add(parts);
+
+                }
+            }
+
+            string[,] output = new string[rows.Count, rows[0].Length];
+            for (int i = 0; i < rows.Count; i++)
+                for (int j = 0; j < rows[i].Length; j++)
+                    output[i, j] = rows[i][j];
 
             return output;
         }
