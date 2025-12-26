@@ -37,7 +37,7 @@
             buttonOutput_Car = new Button();
             buttonOutput_Driver = new Button();
             buttonAbout = new Button();
-            buttonOutput_City = new Button();
+            buttonOutput_Point = new Button();
             buttonInput = new Button();
             splitContainerMain = new SplitContainer();
             groupBoxOutput_Current = new GroupBox();
@@ -99,7 +99,7 @@
             panelInteract.Controls.Add(buttonOutput_Car);
             panelInteract.Controls.Add(buttonOutput_Driver);
             panelInteract.Controls.Add(buttonAbout);
-            panelInteract.Controls.Add(buttonOutput_City);
+            panelInteract.Controls.Add(buttonOutput_Point);
             panelInteract.Controls.Add(buttonInput);
             panelInteract.Dock = DockStyle.Top;
             panelInteract.Location = new Point(0, 88);
@@ -131,6 +131,7 @@
             buttonOutput_Driver.TabIndex = 0;
             toolTipGeneral.SetToolTip(buttonOutput_Driver, "Вывести таблицу водителей");
             buttonOutput_Driver.UseVisualStyleBackColor = true;
+            buttonOutput_Driver.Click += buttonOutput_Driver_Click;
             // 
             // buttonAbout
             // 
@@ -142,18 +143,20 @@
             buttonAbout.TabIndex = 0;
             toolTipGeneral.SetToolTip(buttonAbout, "Информация о создателе приложения");
             buttonAbout.UseVisualStyleBackColor = true;
+            buttonAbout.Click += buttonAbout_Click;
             // 
-            // buttonOutput_City
+            // buttonOutput_Point
             // 
-            buttonOutput_City.Anchor = AnchorStyles.Top;
-            buttonOutput_City.Enabled = false;
-            buttonOutput_City.Image = (Image)resources.GetObject("buttonOutput_City.Image");
-            buttonOutput_City.Location = new Point(417, 6);
-            buttonOutput_City.Name = "buttonOutput_City";
-            buttonOutput_City.Size = new Size(60, 60);
-            buttonOutput_City.TabIndex = 0;
-            toolTipGeneral.SetToolTip(buttonOutput_City, "Вывести таблицу выездов");
-            buttonOutput_City.UseVisualStyleBackColor = true;
+            buttonOutput_Point.Anchor = AnchorStyles.Top;
+            buttonOutput_Point.Enabled = false;
+            buttonOutput_Point.Image = (Image)resources.GetObject("buttonOutput_Point.Image");
+            buttonOutput_Point.Location = new Point(417, 6);
+            buttonOutput_Point.Name = "buttonOutput_Point";
+            buttonOutput_Point.Size = new Size(60, 60);
+            buttonOutput_Point.TabIndex = 0;
+            toolTipGeneral.SetToolTip(buttonOutput_Point, "Вывести таблицу выездов");
+            buttonOutput_Point.UseVisualStyleBackColor = true;
+            buttonOutput_Point.Click += buttonOutput_Point_Click;
             // 
             // buttonInput
             // 
@@ -271,7 +274,7 @@
         private Button buttonOutput_Car;
         private Button buttonOutput_Driver;
         private Button buttonAbout;
-        private Button buttonOutput_City;
+        private Button buttonOutput_Point;
         private Button buttonInput;
         private GroupBox groupBoxOutput_Current;
         private DataGridView dataGridViewOutput_Current;
