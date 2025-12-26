@@ -61,7 +61,7 @@
             // 
             // panelInfo
             // 
-            panelInfo.BackColor = Color.FromArgb(192, 255, 255);
+            panelInfo.BackColor = SystemColors.Control;
             panelInfo.Controls.Add(info_groupBoxGeneral);
             panelInfo.Dock = DockStyle.Top;
             panelInfo.Location = new Point(0, 0);
@@ -95,7 +95,7 @@
             // 
             // panelInteract
             // 
-            panelInteract.BackColor = Color.FromArgb(255, 255, 192);
+            panelInteract.BackColor = SystemColors.Control;
             panelInteract.Controls.Add(buttonOutput_Car);
             panelInteract.Controls.Add(buttonOutput_Driver);
             panelInteract.Controls.Add(buttonAbout);
@@ -177,12 +177,12 @@
             // 
             // splitContainerMain.Panel1
             // 
-            splitContainerMain.Panel1.BackColor = Color.FromArgb(192, 255, 192);
+            splitContainerMain.Panel1.BackColor = SystemColors.Control;
             splitContainerMain.Panel1.Controls.Add(groupBoxOutput_Current);
             // 
             // splitContainerMain.Panel2
             // 
-            splitContainerMain.Panel2.BackColor = Color.FromArgb(192, 192, 255);
+            splitContainerMain.Panel2.BackColor = SystemColors.Control;
             splitContainerMain.Panel2.Controls.Add(groupBoxOutput_Previous);
             splitContainerMain.Size = new Size(784, 201);
             splitContainerMain.SplitterDistance = 385;
